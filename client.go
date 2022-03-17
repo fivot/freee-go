@@ -122,6 +122,85 @@ func (c *Client) postFiles(ctx context.Context,
 	return c.do(ctx, oauth2Token, req, res)
 }
 
+func (c *Client) downloadFile(ctx context.Context,
+	apiPath string, method string,
+	oauth2Token *oauth2.Token,
+	queryParams url.Values,
+) ([]byte, *oauth2.Token, error) {
+	// TODO: content-typeはcsv以外もあり得る？
+	req, err := c.newRequest(ctx, apiPath, method, "text/csv", queryParams, nil)
+	if err != nil {
+		return nil, oauth2Token, err
+	}
+	tokenSource := c.config.Oauth2.TokenSource(ctx, oauth2Token)
+	httpClient := oauth2.NewClient(ctx, tokenSource)
+	response, err := httpClient.Do(req)
+	if err != nil {
+		e := &oauth2.RetrieveError{}
+		if errors.As(err, &e) {
+			resp := &Error{
+				RawError:                err.Error(),
+				IsAuthorizationRequired: true,
+			}
+			if e.Response != nil {
+				resp.StatusCode = e.Response.StatusCode
+			}
+			return nil, oauth2Token, resp
+		}
+		errURL := &url.Error{}
+		if errors.As(err, &errURL) {
+			err = errURL.Unwrap()
+			if v, ok := err.(*Error); ok {
+				err = v
+			}
+		}
+		return nil, oauth2Token, err
+	}
+	defer response.Body.Close()
+	c.logf("[freee] %s: %s", HeaderXFreeeRequestID, response.Header.Get(HeaderXFreeeRequestID))
+	c.logf("[freee] %s: %v %v%v", response.Status, req.Method, req.URL.Host, req.URL.Path)
+
+	oauth2Token, err = tokenSource.Token()
+	if err != nil {
+		// error occurred, but ignored.
+		c.logf("[freee] OAuth2: %v", err)
+	}
+
+	var r io.Reader = response.Body
+	// Parse freee API errors
+	code := response.StatusCode
+	if code >= http.StatusBadRequest {
+		byt, err := ioutil.ReadAll(r)
+		if err != nil {
+			// error occured, but ignored.
+			c.logf("[freee] HTTP response body: %v", err)
+		}
+		res := &Error{
+			StatusCode: code,
+			RawError:   string(byt),
+		}
+		// Check if re-authorization is required
+		if code == http.StatusUnauthorized {
+			var e UnauthorizedError
+			if err := json.NewDecoder(bytes.NewReader(byt)).Decode(&e); err != nil {
+				c.logf("[freee] HTTP response body: %v", err)
+				return nil, oauth2Token, res
+			}
+			if e.Code == UnauthorizedCodeInvalidAccessToken ||
+				e.Code == UnauthorizedCodeExpiredAccessToken {
+				res.IsAuthorizationRequired = true
+			}
+		}
+		return nil, oauth2Token, res
+	}
+	// TODO: bytesではなくBodyをそのまま返した方がいいかも
+	bytes, err := io.ReadAll(response.Body)
+	if err != nil {
+		return nil, oauth2Token, err
+	}
+	return bytes, oauth2Token, nil
+}
+
 func (c *Client) newRequest(
 	ctx context.Context,
 	apiPath string, method string,
