@@ -126,7 +126,7 @@ func (c *Client) downloadFile(ctx context.Context,
 	apiPath string, method string,
 	oauth2Token *oauth2.Token,
 	queryParams url.Values,
-) ([]byte, *oauth2.Token, error) {
+) (io.ReadCloser, *oauth2.Token, error) {
 	// TODO: content-typeはcsv以外もあり得る？
 	req, err := c.newRequest(ctx, apiPath, method, "text/csv", queryParams, nil)
 	if err != nil {
@@ -156,7 +156,6 @@ func (c *Client) downloadFile(ctx context.Context,
 		}
 		return nil, oauth2Token, err
 	}
-	defer response.Body.Close()
 	c.logf("[freee] %s: %s", HeaderXFreeeRequestID, response.Header.Get(HeaderXFreeeRequestID))
 	c.logf("[freee] %s: %v %v%v", response.Status, req.Method, req.URL.Host, req.URL.Path)
 
@@ -166,11 +165,12 @@ func (c *Client) downloadFile(ctx context.Context,
 		c.logf("[freee] OAuth2: %v", err)
 	}
 
-	var r io.Reader = response.Body
 	// Parse freee API errors
 	code := response.StatusCode
 	if code >= http.StatusBadRequest {
-		byt, err := ioutil.ReadAll(r)
+		defer response.Body.Close()
+
+		byt, err := ioutil.ReadAll(response.Body)
 		if err != nil {
 			// error occured, but ignored.
 			c.logf("[freee] HTTP response body: %v", err)
@@ -193,12 +193,7 @@ func (c *Client) downloadFile(ctx context.Context,
 		}
 		return nil, oauth2Token, res
 	}
-	// TODO: bytesではなくBodyをそのまま返した方がいいかも
-	bytes, err := io.ReadAll(response.Body)
-	if err != nil {
-		return nil, oauth2Token, err
-	}
-	return bytes, oauth2Token, nil
+	return response.Body, oauth2Token, nil
 }
 
 func (c *Client) newRequest(

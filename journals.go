@@ -3,6 +3,7 @@ package freee
 import (
 	"context"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 
@@ -169,7 +170,7 @@ func (c *Client) GetJournalStatus(
 func (c *Client) GetJournalDownload(
 	ctx context.Context, oauth2Token *oauth2.Token,
 	companyID uint32, journalID int32,
-) ([]byte, *oauth2.Token, error) {
+) (io.ReadCloser, *oauth2.Token, error) {
 	v := url.Values{}
 	SetCompanyID(&v, companyID)
 	bytes, oauth2Token, err := c.downloadFile(ctx, fmt.Sprintf(APIPathJournalDownload, journalID), http.MethodGet, oauth2Token, v)
