@@ -94,9 +94,9 @@ func main() {
 
 ### 経費科目
 
-- [ ] GET /api/1/expense_application_line_templates 経費科目一覧の取得
+- [x] GET /api/1/expense_application_line_templates 経費科目一覧の取得
 - [ ] POST /api/1/expense_application_line_templates 経費科目の作成
-- [ ] GET /api/1/expense_application_line_templates/{id} 経費科目の取得
+- [x] GET /api/1/expense_application_line_templates/{id} 経費科目の取得
 - [ ] PUT /api/1/expense_application_line_templates/{id} 経費科目の更新
 - [ ] DELETE /api/1/expense_application_line_templates/{id} 経費科目の削除
 
