@@ -133,7 +133,7 @@ func main() {
 
 ### 振替伝票
 
-- [ ] GET /api/1/manual_journals 振替伝票一覧の取得
+- [x] GET /api/1/manual_journals 振替伝票一覧の取得
 - [ ] POST /api/1/manual_journals 振替伝票の作成
 - [x] GET /api/1/manual_journals/{id} 振替伝票の取得
 - [x] PUT /api/1/manual_journals/{id} 振替伝票の更新
