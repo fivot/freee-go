@@ -220,10 +220,10 @@ func main() {
 
 ### 試算表
 
-- [ ] GET /api/1/reports/trial_bs 貸借対照表の取得
+- [x] GET /api/1/reports/trial_bs 貸借対照表の取得
 - [ ] GET /api/1/reports/trial_bs_two_years 貸借対照表(前年比較)の取得
 - [ ] GET /api/1/reports/trial_bs_three_years 貸借対照表(３期間比較)の取得
-- [ ] GET /api/1/reports/trial_pl 損益計算書の取得
+- [x] GET /api/1/reports/trial_pl 損益計算書の取得
 - [ ] GET /api/1/reports/trial_pl_two_years 損益計算書(前年比較)の取得
 - [ ] GET /api/1/reports/trial_pl_three_years 損益計算書(３期間比較)の取得
 - [ ] GET /api/1/reports/trial_pl_sections 損益計算書(部門比較)の取得
