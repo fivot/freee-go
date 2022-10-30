@@ -100,10 +100,10 @@ type GetJournalsOpts struct {
 	DownloadType string `url:"download_type"`
 	// 補助科目やコメントとして出力する項目
 	// Available values : partner, item, tag, section, description, wallet_txn_description, segment_1_tag, segment_2_tag, segment_3_tag, all
-	VisibleTags []string `url:"visible_tags,omitempty"`
+	VisibleTags []string `url:"visible_tags,omitempty,brackets"`
 	// 追加出力するID項目
 	// Available values : deal_id, transfer_id, manual_journal_id
-	VisibleIDs []string `url:"visible_ids,omitempty"`
+	VisibleIDs []string `url:"visible_ids,omitempty,brackets"`
 	// 取得開始日 (yyyy-mm-dd)
 	StartDate string `url:"start_date,omitempty"`
 	// 取得終了日 (yyyy-mm-dd)
