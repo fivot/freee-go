@@ -122,12 +122,11 @@ func (c *Client) postFiles(ctx context.Context,
 	return c.do(ctx, oauth2Token, req, res)
 }
 
-func (c *Client) downloadFile(ctx context.Context,
+func (c *Client) downloadCSV(ctx context.Context,
 	apiPath string, method string,
 	oauth2Token *oauth2.Token,
 	queryParams url.Values,
 ) (io.ReadCloser, *oauth2.Token, error) {
-	// TODO: content-typeはcsv以外もあり得る？
 	req, err := c.newRequest(ctx, apiPath, method, "text/csv", queryParams, nil)
 	if err != nil {
 		return nil, oauth2Token, err

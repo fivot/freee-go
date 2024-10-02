@@ -46,7 +46,7 @@ type JournalsResponse struct {
 	Journals struct {
 		// 受け付けID
 		ID int64 `json:"id"`
-		// TODO: 受け付けメッセージ
+		// 受け付けメッセージ
 		Messages *[]string `json:"messages,omitempty"`
 		// 事業所ID
 		CompanyID int64 `json:"company_id"`
@@ -173,7 +173,7 @@ func (c *Client) GetJournalDownload(
 ) (io.ReadCloser, *oauth2.Token, error) {
 	v := url.Values{}
 	SetCompanyID(&v, companyID)
-	bytes, oauth2Token, err := c.downloadFile(ctx, fmt.Sprintf(APIPathJournalDownload, journalID), http.MethodGet, oauth2Token, v)
+	bytes, oauth2Token, err := c.downloadCSV(ctx, fmt.Sprintf(APIPathJournalDownload, journalID), http.MethodGet, oauth2Token, v)
 	if err != nil {
 		return nil, oauth2Token, err
 	}
