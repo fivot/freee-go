@@ -24,36 +24,44 @@ type ItemResponse struct {
 
 type Item struct {
 	// 品目ID
-	ID int32 `json:"id"`
+	ID int64 `json:"id"`
 	// 事業所ID
-	CompanyID int32 `json:"company_id"`
+	CompanyID int64 `json:"company_id"`
 	// 品目名 (30文字以内)
 	Name string `json:"name"`
+	// 更新日(yyyy-mm-dd)
+	UpdateDate string `json:"update_date"`
+	// 品目の使用設定（true: 使用する、false: 使用しない）
+	Available bool `json:"available"`
 	// ショートカット１ (20文字以内)
 	Shortcut1 *string `json:"shortcut1,omitempty"`
 	// ショートカット２ (20文字以内)
 	Shortcut2 *string `json:"shortcut2,omitempty"`
+	// コード
+	Code *string `json:"code,omitempty"`
 }
 
 type GetItemsOpts struct {
-	Offset uint32 `url:"offset,omitempty"`
-	Limit  uint32 `url:"limit,omitempty"`
+	Offset int64 `url:"offset,omitempty"`
+	Limit  int64 `url:"limit,omitempty"`
 }
 
 type ItemParams struct {
 	// 事業所ID
-	CompanyID int32 `json:"company_id"`
+	CompanyID int64 `json:"company_id"`
 	// 品目名 (30文字以内)
 	Name string `json:"name"`
 	// ショートカット１ (20文字以内)
 	Shortcut1 *string `json:"shortcut1,omitempty"`
 	// ショートカット２ (20文字以内)
 	Shortcut2 *string `json:"shortcut2,omitempty"`
+	// コード（利用を有効にしている場合は必須）
+	Code *string `json:"code,omitempty"`
 }
 
 func (c *Client) GetItems(
 	ctx context.Context, oauth2Token *oauth2.Token,
-	companyID uint32, opts GetItemsOpts,
+	companyID int64, opts GetItemsOpts,
 ) (*Items, *oauth2.Token, error) {
 	var result Items
 
@@ -85,7 +93,7 @@ func (c *Client) CreateItem(
 func (c *Client) UpdateItem(
 	ctx context.Context, oauth2Token *oauth2.Token,
 	params ItemParams,
-	itemID uint32,
+	itemID int64,
 ) (*Item, *oauth2.Token, error) {
 	var result ItemResponse
 	oauth2Token, err := c.call(ctx, path.Join(APIPathItems, fmt.Sprint(itemID)), http.MethodPut, oauth2Token, nil, params, &result)
@@ -97,7 +105,7 @@ func (c *Client) UpdateItem(
 
 func (c *Client) DestroyItem(
 	ctx context.Context, oauth2Token *oauth2.Token,
-	companyID uint32, itemID int32,
+	companyID int64, itemID int64,
 ) (*oauth2.Token, error) {
 	v, err := query.Values(nil)
 	if err != nil {
