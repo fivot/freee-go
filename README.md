@@ -94,9 +94,9 @@ func main() {
 
 ### 経費科目
 
-- [ ] GET /api/1/expense_application_line_templates 経費科目一覧の取得
+- [x] GET /api/1/expense_application_line_templates 経費科目一覧の取得
 - [ ] POST /api/1/expense_application_line_templates 経費科目の作成
-- [ ] GET /api/1/expense_application_line_templates/{id} 経費科目の取得
+- [x] GET /api/1/expense_application_line_templates/{id} 経費科目の取得
 - [ ] PUT /api/1/expense_application_line_templates/{id} 経費科目の更新
 - [ ] DELETE /api/1/expense_application_line_templates/{id} 経費科目の削除
 
@@ -127,13 +127,13 @@ func main() {
 
 ### 仕訳帳
 
-- [ ] GET /api/1/journals ダウンロード要求
-- [ ] GET /api/1/journals/reports/{id}/status ステータス確認
-- [ ] GET /api/1/journals/reports/{id}/download ダウンロード実行
+- [x] GET /api/1/journals ダウンロード要求
+- [x] GET /api/1/journals/reports/{id}/status ステータス確認
+- [x] GET /api/1/journals/reports/{id}/download ダウンロード実行
 
 ### 振替伝票
 
-- [ ] GET /api/1/manual_journals 振替伝票一覧の取得
+- [x] GET /api/1/manual_journals 振替伝票一覧の取得
 - [ ] POST /api/1/manual_journals 振替伝票の作成
 - [x] GET /api/1/manual_journals/{id} 振替伝票の取得
 - [x] PUT /api/1/manual_journals/{id} 振替伝票の更新
@@ -220,10 +220,10 @@ func main() {
 
 ### 試算表
 
-- [ ] GET /api/1/reports/trial_bs 貸借対照表の取得
+- [x] GET /api/1/reports/trial_bs 貸借対照表の取得
 - [ ] GET /api/1/reports/trial_bs_two_years 貸借対照表(前年比較)の取得
 - [ ] GET /api/1/reports/trial_bs_three_years 貸借対照表(３期間比較)の取得
-- [ ] GET /api/1/reports/trial_pl 損益計算書の取得
+- [x] GET /api/1/reports/trial_pl 損益計算書の取得
 - [ ] GET /api/1/reports/trial_pl_two_years 損益計算書(前年比較)の取得
 - [ ] GET /api/1/reports/trial_pl_three_years 損益計算書(３期間比較)の取得
 - [ ] GET /api/1/reports/trial_pl_sections 損益計算書(部門比較)の取得

@@ -15,6 +15,17 @@ const (
 
 	ManualJournalEntrySideCredit = "credit"
 	ManualJournalEntrySideDebit  = "debit"
+
+	CommentStatusPostedWithMention   = "posted_with_mention"   // 自分宛のコメント
+	CommentStatusRaisedWithMention   = "raised_with_mention"   // 自分宛のコメント-未解決
+	CommentStatusResolvedWithMention = "resolved_with_mention" // 自分宛のコメント-解決済
+	CommentStatusPosted              = "posted"                // コメントあり
+	CommentStatusRaised              = "raised"                // 未解決
+	CommentStatusResolved            = "resolved"              // 解決済
+	CommentStatusNone                = "none"                  // コメントなし
+
+	AdjustmentOnly    = "only"    // 決算整理仕訳のみ
+	AdjustmentWithout = "without" // 決算整理仕訳以外
 )
 
 type ManualJournalsResponse struct {
