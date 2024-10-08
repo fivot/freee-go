@@ -60,7 +60,7 @@ type TrialPLResponse struct {
 
 type GetTrialBSOpts struct {
 	// 事業所ID
-	CompanyID int32 `url:"company_id"`
+	CompanyID int64 `url:"company_id"`
 	// 会計年度
 	FiscalYear int `url:"fiscal_year,omitempty"`
 	// 発生月で絞込：開始会計月(1-12)。指定されない場合、現在の会計年度の期首月が指定されます。
@@ -76,13 +76,13 @@ type GetTrialBSOpts struct {
 	// 内訳の表示（取引先: partner, 品目: item, 部門: section, 勘定科目: account_item, セグメント1(法人向けプロフェッショナル, 法人向けエンタープライズプラン): segment_1_tag, セグメント2(法人向け エンタープライズプラン):segment_2_tag, セグメント3(法人向け エンタープライズプラン): segment_3_tag） ※勘定科目はaccount_item_display_typeが「group」の時のみ指定できます
 	BreakdownDisplayType string `url:"breakdown_display_type,omitempty"`
 	// 取引先IDで絞込（0を指定すると、取引先が未選択で絞り込めます）
-	PartnerID int32 `url:"partner_id,omitempty"`
+	PartnerID int64 `url:"partner_id,omitempty"`
 	// 取引先コードで絞込（事業所設定で取引先コードの利用を有効にしている場合のみ利用可能です）
 	PartnerCode string `url:"partner_code,omitempty"`
 	// 品目IDで絞込（0を指定すると、品目が未選択で絞り込めます）
-	ItemID int32 `url:"item_id,omitempty"`
+	ItemID int64 `url:"item_id,omitempty"`
 	// 部門IDで絞込（0を指定すると、部門が未選択で絞り込めます）
-	SectionID int32 `url:"section_id,omitempty"`
+	SectionID int64 `url:"section_id,omitempty"`
 	// 決算整理仕訳で絞込（決算整理仕訳のみ: only, 決算整理仕訳以外: without）。指定されない場合、決算整理仕訳以外: withoutが指定されます。
 	Adjustment string `url:"adjustment,omitempty"`
 	// 承認ステータスで絞込 (未承認を除く: without_in_progress (デフォルト)、全てのステータス: all)
@@ -93,7 +93,7 @@ type GetTrialBSOpts struct {
 
 type GetTrialPLOpts struct {
 	// 事業所ID
-	CompanyID int32 `url:"company_id"`
+	CompanyID int64 `url:"company_id"`
 	// 会計年度
 	FiscalYear int `url:"fiscal_year,omitempty"`
 	// 発生月で絞込：開始会計月(1-12)。指定されない場合、現在の会計年度の期首月が指定されます。
@@ -109,13 +109,13 @@ type GetTrialPLOpts struct {
 	// 内訳の表示（取引先: partner, 品目: item, 部門: section, 勘定科目: account_item, セグメント1(法人向けプロフェッショナル, 法人向けエンタープライズプラン): segment_1_tag, セグメント2(法人向け エンタープライズプラン):segment_2_tag, セグメント3(法人向け エンタープライズプラン): segment_3_tag） ※勘定科目はaccount_item_display_typeが「group」の時のみ指定できます
 	BreakdownDisplayType string `url:"breakdown_display_type,omitempty"`
 	// 取引先IDで絞込（0を指定すると、取引先が未選択で絞り込めます）
-	PartnerID int32 `url:"partner_id,omitempty"`
+	PartnerID int64 `url:"partner_id,omitempty"`
 	// 取引先コードで絞込（事業所設定で取引先コードの利用を有効にしている場合のみ利用可能です）
 	PartnerCode string `url:"partner_code,omitempty"`
 	// 品目IDで絞込（0を指定すると、品目が未選択で絞り込めます）
-	ItemID int32 `url:"item_id,omitempty"`
+	ItemID int64 `url:"item_id,omitempty"`
 	// 部門IDで絞込（0を指定すると、部門が未選択で絞り込めます）
-	SectionID int32 `url:"section_id,omitempty"`
+	SectionID int64 `url:"section_id,omitempty"`
 	// 決算整理仕訳で絞込（決算整理仕訳のみ: only, 決算整理仕訳以外: without）。指定されない場合、決算整理仕訳以外: withoutが指定されます。
 	Adjustment string `url:"adjustment,omitempty"`
 	// 配賦仕訳で絞込（配賦仕訳のみ：only,配賦仕訳以外：without）。指定されない場合、配賦仕訳を含む金額が返却されます。
@@ -128,7 +128,7 @@ type GetTrialPLOpts struct {
 
 type TrialBS struct {
 	// 事業所ID
-	CompanyID int32 `json:"company_id"`
+	CompanyID int64 `json:"company_id"`
 	// 会計年度(条件に指定した時、または条件に月、日条件がない時のみ含まれる）
 	FiscalYear *int `json:"fiscal_year,omitempty"`
 	// 発生月で絞込：開始会計月(1-12)(条件に指定した時のみ含まれる）
@@ -144,13 +144,13 @@ type TrialBS struct {
 	// 内訳の表示（取引先: partner, 品目: item, 部門: section, 勘定科目: account_item, セグメント1(法人向けプロフェッショナル, 法人向けエンタープライズプラン): segment_1_tag, セグメント2(法人向け エンタープライズプラン):segment_2_tag, セグメント3(法人向け エンタープライズプラン): segment_3_tag）(条件に指定した時のみ含まれる）
 	BreakdownDisplayType *string `json:"breakdown_display_type,omitempty"`
 	// 取引先ID(条件に指定した時のみ含まれる）
-	PartnerID *int32 `json:"partner_id,omitempty"`
+	PartnerID *int64 `json:"partner_id,omitempty"`
 	// 取引先コード(条件に指定した時のみ含まれる）
 	PartnerCode *string `json:"partner_code,omitempty"`
 	// 品目ID(条件に指定した時のみ含まれる）
-	ItemID *int32 `json:"item_id,omitempty"`
+	ItemID *int64 `json:"item_id,omitempty"`
 	// 部門ID(条件に指定した時のみ含まれる）
-	SectionID *int32 `json:"section_id,omitempty"`
+	SectionID *int64 `json:"section_id,omitempty"`
 	// 決算整理仕訳のみ: only, 決算整理仕訳以外: without(条件に指定した時のみ含まれる）
 	Adjustment *string `json:"adjustment,omitempty"`
 	// 未承認を除く: without_in_progress (デフォルト), 全てのステータス: all(条件に指定した時のみ含まれる）
@@ -162,7 +162,7 @@ type TrialBS struct {
 
 type TrialPL struct {
 	// 事業所ID
-	CompanyID int32 `json:"company_id"`
+	CompanyID int64 `json:"company_id"`
 	// 会計年度(条件に指定した時、または条件に月、日条件がない時のみ含まれる）
 	FiscalYear *int `json:"fiscal_year,omitempty"`
 	// 発生月で絞込：開始会計月(1-12)(条件に指定した時のみ含まれる）
@@ -178,13 +178,13 @@ type TrialPL struct {
 	// 内訳の表示（取引先: partner, 品目: item, 部門: section, 勘定科目: account_item, セグメント1(法人向けプロフェッショナル, 法人向けエンタープライズプラン): segment_1_tag, セグメント2(法人向け エンタープライズプラン):segment_2_tag, セグメント3(法人向け エンタープライズプラン): segment_3_tag）(条件に指定した時のみ含まれる）
 	BreakdownDisplayType *string `json:"breakdown_display_type,omitempty"`
 	// 取引先ID(条件に指定した時のみ含まれる）
-	PartnerID *int32 `json:"partner_id,omitempty"`
+	PartnerID *int64 `json:"partner_id,omitempty"`
 	// 取引先コード(条件に指定した時のみ含まれる）
 	PartnerCode *string `json:"partner_code,omitempty"`
 	// 品目ID(条件に指定した時のみ含まれる）
-	ItemID *int32 `json:"item_id,omitempty"`
+	ItemID *int64 `json:"item_id,omitempty"`
 	// 部門ID(条件に指定した時のみ含まれる）
-	SectionID *int32 `json:"section_id,omitempty"`
+	SectionID *int64 `json:"section_id,omitempty"`
 	// 決算整理仕訳のみ: only, 決算整理仕訳以外: without(条件に指定した時のみ含まれる）
 	Adjustment *string `json:"adjustment,omitempty"`
 	// 配賦仕訳のみ：only,配賦仕訳以外：without(条件に指定した時のみ含まれる）
@@ -198,7 +198,7 @@ type TrialPL struct {
 
 type Balance struct {
 	// 勘定科目ID(勘定科目の時のみ含まれる)
-	AccountItemID int32 `json:"account_item_id"`
+	AccountItemID int64 `json:"account_item_id"`
 	// 勘定科目名(勘定科目の時のみ含まれる)
 	AccountItemName string `json:"account_item_name"`
 	// 決算書表示名(account_item_display_type:group指定時に決算書表示名の時のみ含まれる)
@@ -206,7 +206,7 @@ type Balance struct {
 	// breakdown_display_type:partner, account_item_display_type:account_item指定時のみ含まれる
 	Partners []struct {
 		// 取引先ID
-		ID int32 `json:"id"`
+		ID int64 `json:"id"`
 		// 取引先名
 		Name string `json:"name"`
 		// 期首残高
@@ -222,7 +222,7 @@ type Balance struct {
 	// breakdown_display_type:item, account_item_display_type:account_item指定時のみ含まれる
 	Items []struct {
 		// 品目ID
-		ID int32 `json:"id"`
+		ID int64 `json:"id"`
 		// 品目
 		Name string `json:"name"`
 		// 期首残高
@@ -238,7 +238,7 @@ type Balance struct {
 	} `json:"items"`
 	Sections []struct {
 		// 部門ID
-		ID int32 `json:"id"`
+		ID int64 `json:"id"`
 		// 部門名
 		Name string `json:"name"`
 		// 期首残高
@@ -254,7 +254,7 @@ type Balance struct {
 	} `json:"sections"`
 	Segment1Tags []struct {
 		// セグメント1タグID
-		ID int32 `json:"id"`
+		ID int64 `json:"id"`
 		// セグメント1タグ名
 		Name string `json:"name"`
 		// 期首残高
@@ -270,7 +270,7 @@ type Balance struct {
 	} `json:"segment_1_tags"`
 	Segment2Tags []struct {
 		// セグメント2タグID
-		ID int32 `json:"id"`
+		ID int64 `json:"id"`
 		// セグメント2タグ名
 		Name string `json:"name"`
 		// 期首残高
@@ -286,7 +286,7 @@ type Balance struct {
 	} `json:"segment_2_tags"`
 	Segment3Tags []struct {
 		// セグメント3タグID
-		ID int32 `json:"id"`
+		ID int64 `json:"id"`
 		// セグメント3タグ名
 		Name string `json:"name"`
 		// 期首残高
@@ -322,7 +322,7 @@ type Balance struct {
 
 func (c *Client) GetTrialBS(
 	ctx context.Context, oauth2Token *oauth2.Token,
-	companyID uint32, opts GetTrialBSOpts,
+	companyID int64, opts GetTrialBSOpts,
 ) (*TrialBS, *oauth2.Token, error) {
 	var result TrialBSResponse
 	v, err := query.Values(opts)
@@ -339,7 +339,7 @@ func (c *Client) GetTrialBS(
 
 func (c *Client) GetTrialPL(
 	ctx context.Context, oauth2Token *oauth2.Token,
-	companyID uint32, opts GetTrialPLOpts,
+	companyID int64, opts GetTrialPLOpts,
 ) (*TrialPL, *oauth2.Token, error) {
 	var result TrialPLResponse
 	v, err := query.Values(opts)

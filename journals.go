@@ -45,11 +45,11 @@ const (
 type JournalsResponse struct {
 	Journals struct {
 		// 受け付けID
-		ID int32 `json:"id"`
-		// TODO: 受け付けメッセージ
+		ID int64 `json:"id"`
+		// 受け付けメッセージ
 		Messages *[]string `json:"messages,omitempty"`
 		// 事業所ID
-		CompanyID int32 `json:"company_id"`
+		CompanyID int64 `json:"company_id"`
 		// ダウンロード形式
 		// - generic(freee Webからダウンロードできるものと同じ)
 		// - csv (yayoi形式)
@@ -113,9 +113,9 @@ type GetJournalsOpts struct {
 type JournalStatusResponse struct {
 	Journals struct {
 		// 受け付けID
-		ID int32 `json:"id"`
+		ID int64 `json:"id"`
 		// 事業所ID
-		CompanyID int32 `json:"company_id"`
+		CompanyID int64 `json:"company_id"`
 		// ダウンロード形式
 		DownloadType string `json:"download_type"`
 		// ダウンロードリクエストのステータス
@@ -135,7 +135,7 @@ type JournalStatusResponse struct {
 
 func (c *Client) GetJournals(
 	ctx context.Context, oauth2Token *oauth2.Token,
-	companyID uint32, opts GetJournalsOpts,
+	companyID int64, opts GetJournalsOpts,
 ) (*JournalsResponse, *oauth2.Token, error) {
 	var result JournalsResponse
 
@@ -154,7 +154,7 @@ func (c *Client) GetJournals(
 
 func (c *Client) GetJournalStatus(
 	ctx context.Context, oauth2Token *oauth2.Token,
-	companyID uint32, journalID int32,
+	companyID int64, journalID int64,
 ) (*JournalStatusResponse, *oauth2.Token, error) {
 	var result JournalStatusResponse
 	v := url.Values{}
@@ -169,11 +169,11 @@ func (c *Client) GetJournalStatus(
 
 func (c *Client) GetJournalDownload(
 	ctx context.Context, oauth2Token *oauth2.Token,
-	companyID uint32, journalID int32,
+	companyID int64, journalID int64,
 ) (io.ReadCloser, *oauth2.Token, error) {
 	v := url.Values{}
 	SetCompanyID(&v, companyID)
-	bytes, oauth2Token, err := c.downloadFile(ctx, fmt.Sprintf(APIPathJournalDownload, journalID), http.MethodGet, oauth2Token, v)
+	bytes, oauth2Token, err := c.downloadCSV(ctx, fmt.Sprintf(APIPathJournalDownload, journalID), http.MethodGet, oauth2Token, v)
 	if err != nil {
 		return nil, oauth2Token, err
 	}

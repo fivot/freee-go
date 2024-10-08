@@ -24,24 +24,24 @@ type ExpenseApplicationLineTemplateResponse struct {
 
 type GetExpenseApplicationLineTemplateOpts struct {
 	// 事業所ID
-	CompanyID int32 `url:"company_id"`
+	CompanyID int64 `url:"company_id"`
 	// 取得レコードのオフセット (デフォルト: 0)
-	Offset uint32 `url:"offset,omitempty"`
+	Offset int64 `url:"offset,omitempty"`
 	// 取得レコードの件数 (デフォルト: 20, 最大: 100)
-	Limit uint32 `url:"limit,omitempty"`
+	Limit int64 `url:"limit,omitempty"`
 }
 
 type ExpenseApplicationLineTemplate struct {
 	// 経費科目ID
-	ID int32 `json:"id"`
+	ID int64 `json:"id"`
 	// 経費科目名
 	Name string `json:"name"`
 	// 勘定科目ID
-	AccountItemID *int32 `json:"account_item_id,omitempty"`
+	AccountItemID *int64 `json:"account_item_id,omitempty"`
 	// 勘定科目名
 	AccountItemName string `json:"account_item_name"`
 	// 税区分コード
-	TaxCode *int32 `json:"tax_code,omitempty"`
+	TaxCode *int64 `json:"tax_code,omitempty"`
 	// 税区分名
 	TaxName string `json:"tax_name"`
 	// 経費科目の説明
@@ -54,7 +54,7 @@ type ExpenseApplicationLineTemplate struct {
 
 func (c *Client) GetExpenseApplicationLineTemplates(
 	ctx context.Context, oauth2Token *oauth2.Token,
-	companyID uint32, opts GetExpenseApplicationLineTemplateOpts,
+	companyID int64, opts GetExpenseApplicationLineTemplateOpts,
 ) (*ExpenseApplicationLineTemplatesResponse, *oauth2.Token, error) {
 	var result ExpenseApplicationLineTemplatesResponse
 	v, err := query.Values(opts)
@@ -71,7 +71,7 @@ func (c *Client) GetExpenseApplicationLineTemplates(
 
 func (c *Client) GetExpenseApplicationLineTemplate(
 	ctx context.Context, oauth2Token *oauth2.Token,
-	companyID uint32, expenseApplicationLineTemplateID int32, opts GetExpenseApplicationLineTemplateOpts,
+	companyID int64, expenseApplicationLineTemplateID int64, opts GetExpenseApplicationLineTemplateOpts,
 ) (*ExpenseApplicationLineTemplate, *oauth2.Token, error) {
 	var result ExpenseApplicationLineTemplateResponse
 	v, err := query.Values(opts)
